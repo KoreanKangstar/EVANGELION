@@ -1,29 +1,36 @@
 # 🧠 EVANGELION - EdgeNAS
-Personal + Shared Flask-based NAS system for Raspberry Pi.
 
+**EVANGELION - EdgeNAS** is a Flask-based hybrid NAS system for Raspberry Pi.  
+It provides both **personal** and **shared** cloud storage areas, enabling seamless file management and collaboration between users.
 
-## Features
-- Multi-user login
-- Personal and shared folders
-- File upload/download/delete
-- ZIP download
-- UTF-8 filename support
+---
 
+## 🚀 Features
 
-## ⚙️ Setup
+- 🔐 Multi-user login (Basic Auth)
+- 🗂️ Separate **personal** and **shared** storage folders
+- 📤 File upload, 📥 download, and ❌ delete functions
+- 🧩 ZIP download for bulk access
+- 🌐 UTF-8 filename & multi-language compatibility
+- 💾 Modular Flask architecture (auth / personal / shared / utils separation)
+- 🧱 Ready for deployment on Raspberry Pi 5 or any Linux system
+
+---
+
+## ⚙️ Setup Guide
+
+### 1️⃣ Clone this repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/evangelion.git
-cd evangelion
-pip install flask
-python3 app.py
-
+git clone https://github.com/KoreanKangstar/EVANGELION.git
+cd EVANGELION
 ```
 
+### 2️⃣ Install dependencies
+```bash
+pip install -r requirements.txt
+```
 
-## Access at:
-http://<your_local_ip>:5000
-
-
-## Credits
-
-Developed by Korean Kangstar and the EVANGELION Project Team.
+### 3️⃣ Run the Flask server
+```bash
+python3 app.py
+```
