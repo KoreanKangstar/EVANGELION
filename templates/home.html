@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>EVANGELION - EdgeNAS</title>
+<style>
+body { font-family: Arial; margin: 40px; background: #0d1117; color: #e6edf3; }
+h2 { color: #58a6ff; }
+hr { border: 1px solid #30363d; }
+a { color: #79c0ff; text-decoration: none; }
+a:hover { text-decoration: underline; }
+input[type=submit] { background-color: #238636; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; }
+input[type=file] { margin-bottom: 8px; }
+</style>
+</head>
+<body>
+<h2>EVANGELION - EdgeNAS</h2>
+<p>Logged in as: <b>{{ user }}</b></p>
+<hr>
+
+<h3>Upload File (Personal)</h3>
+<form action="/personal/upload" method="post" enctype="multipart/form-data">
+  <input type="file" name="file"><br>
+  <input type="submit" value="Upload to Personal Folder">
+</form>
+
+<h3>Upload File (Shared)</h3>
+<form action="/shared/upload" method="post" enctype="multipart/form-data">
+  <input type="file" name="file"><br>
+  <input type="submit" value="Upload to Shared Folder">
+</form>
+
+<hr>
+<h3>Personal Files ({{ personal_files|length if personal_files else 0 }})</h3>
+<a href="/personal/download_all">[Download All as ZIP]</a>
+<ul>
+{% for f in personal_files %}
+  <li>{{ f }} — 
+  <a href="/personal/download/{{ f }}">download</a> | 
+  <a href="/personal/delete/{{ f }}">delete</a></li>
+{% else %}
+  <li>No personal files</li>
+{% endfor %}
+</ul>
+
+<hr>
+<h3>Shared Files ({{ shared_files|length if shared_files else 0 }})</h3>
+<a href="/shared/download_all">[Download All as ZIP]</a>
+<ul>
+{% for f in shared_files %}
+  <li>{{ f }} — 
+  <a href="/shared/download/{{ f }}">download</a> | 
+  <a href="/shared/delete/{{ f }}">delete</a></li>
+{% else %}
+  <li>No shared files</li>
+{% endfor %}
+</ul>
+</body>
+</html>
