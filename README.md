@@ -14,3 +14,11 @@ git clone https://github.com/YOUR_USERNAME/evangelion.git
 cd evangelion
 pip install flask
 python3 app.py
+
+## Access at:
+
+http://<your_local_ip>:5000
+
+## Credits
+
+Developed by Kangstar and the EVANGELION Project Team.
