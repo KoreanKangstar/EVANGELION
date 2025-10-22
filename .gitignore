@@ -4,3 +4,8 @@ __pycache__/
 *.pyd
 .env
 config/users.json
+
+# .gitignore
+.env
+users.json
+__pycache__/
