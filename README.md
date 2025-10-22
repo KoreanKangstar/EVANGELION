@@ -1,6 +1,7 @@
 # 🧠 EVANGELION - EdgeNAS
 Personal + Shared Flask-based NAS system for Raspberry Pi.
 
+
 ## Features
 - Multi-user login
 - Personal and shared folders
@@ -8,16 +9,20 @@ Personal + Shared Flask-based NAS system for Raspberry Pi.
 - ZIP download
 - UTF-8 filename support
 
-## Setup
+
+## ⚙️ Setup
 ```bash
 git clone https://github.com/YOUR_USERNAME/evangelion.git
 cd evangelion
 pip install flask
 python3 app.py
 
-## Access at:
+```
 
+
+## Access at:
 http://<your_local_ip>:5000
+
 
 ## Credits
 
