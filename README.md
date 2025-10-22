@@ -26,4 +26,4 @@ http://<your_local_ip>:5000
 
 ## Credits
 
-Developed by Kangstar and the EVANGELION Project Team.
+Developed by Korean Kangstar and the EVANGELION Project Team.
