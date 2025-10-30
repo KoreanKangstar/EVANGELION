@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.env
+config.json
+credentials.json
+*.db
+*.sqlite3
+*.log
+instance/
+*.pem
+*.key
+*.crt
+*.bak

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>Trash - EVANGELION EdgeNAS</title>
+<style>
+body {
+  font-family:'Inter',sans-serif;
+  background:#0f111a;
+  color:#eee;
+  margin:0;
+  padding:2rem;
+}
+h2 { color:#7bdcb5; }
+.topbar {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:1.5rem;
+}
+.topbar a {
+  color:#7bdcb5;
+  text-decoration:none;
+  font-weight:600;
+  margin-left:1rem;
+}
+.topbar a.logout { color:#ff6b6b; }
+.file-card {
+  background:#1e2230;
+  border-radius:10px;
+  padding:1rem;
+  margin-bottom:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+button {
+  background:#7bdcb5;
+  border:none;
+  padding:6px 12px;
+  border-radius:6px;
+  cursor:pointer;
+  color:#0f111a;
+  font-weight:600;
+}
+button:hover { background:#63c3a0; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h2>🗑️ Trash Bin</h2>
+  <div>
+    <a href="/shared/">📁 Shared</a>
+    <a class="logout" href="/auth/logout">Logout</a>
+  </div>
+</div>
+
+<div id="trash-container">불러오는 중...</div>
+
+{% raw %}
+<script>
+// ✅ 휴지통 목록 불러오기
+async function refreshTrash(){
+  const res = await fetch('/shared/trash/files');
+  const files = await res.json();
+  const container = document.getElementById('trash-container');
+  container.innerHTML='';
+  if(files.length===0){
+    container.innerHTML='<p>휴지통이 비었습니다.</p>';
+    return;
+  }
+  files.forEach(f=>{
+    const card=document.createElement('div');
+    card.className='file-card';
+    card.innerHTML=`<span>${f.name} (${f.size} KB)</span>
+      <div>
+        <button onclick="restoreFile('${f.name}')">복원</button>
+      </div>`;
+    container.appendChild(card);
+  });
+}
+
+// ✅ 복원 기능
+async function restoreFile(name){
+  await fetch(`/shared/trash/restore/${name}`, {method:'POST'});
+  alert(`${name} 복원 완료`);
+  refreshTrash();
+}
+
+// ✅ 페이지 로드시 자동 실행
+refreshTrash();
+</script>
+{% endraw %}
+
+</body>
+</html>
+

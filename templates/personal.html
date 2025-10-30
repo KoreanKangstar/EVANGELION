@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>{{ username }}의 개인 저장소</title>
+<style>
+body{font-family:'Inter',sans-serif;background:#0f111a;color:#eee;margin:0;padding:2rem;}
+h2{color:#7bdcb5;}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;}
+.topbar a{color:#7bdcb5;text-decoration:none;font-weight:600;margin-left:1rem;}
+.topbar a.logout{color:#ff6b6b;}
+.file-card{background:#1e2230;border-radius:10px;padding:1rem;margin-bottom:10px;
+display:flex;justify-content:space-between;align-items:center;}
+button{background:#7bdcb5;border:none;padding:6px 12px;border-radius:6px;
+cursor:pointer;color:#0f111a;font-weight:600;}
+button:hover{background:#63c3a0;}
+#upload-zone{border:2px dashed #7bdcb5;border-radius:10px;width:80%;height:150px;margin:2rem auto;
+display:flex;justify-content:center;align-items:center;flex-direction:column;cursor:pointer;}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h2>👤 {{ username }}’s Personal Storage</h2>
+  <div>
+    <a href="/shared">🌐 Shared</a>
+    <a href="/personal/trash">🗑️ Trash</a>
+    <a class="logout" href="/auth/logout">Logout</a>
+  </div>
+</div>
+
+<div id="upload-zone">📤 Drag & Drop files here<br>or click to upload</div>
+<form id="uploadForm" action="/personal/upload" method="post" enctype="multipart/form-data" style="display:none;">
+  <input id="fileInput" type="file" name="file" onchange="this.form.submit()">
+</form>
+
+<div id="file-container">
+{% if files %}
+  {% for f in files %}
+  <div class="file-card">
+    <span>{{ f }}</span>
+    <div>
+      <button onclick="window.open('/personal/download/{{ f }}')">Download</button>
+      <button onclick="deleteFile('{{ f }}')">Delete</button>
+    </div>
+  </div>
+  {% endfor %}
+{% else %}
+  <p>📂 아직 업로드된 파일이 없습니다.</p>
+{% endif %}
+</div>
+
+{% raw %}
+<script>
+const zone=document.getElementById('upload-zone');
+const fileInput=document.getElementById('fileInput');
+zone.addEventListener('click',()=>fileInput.click());
+zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('dragover');});
+zone.addEventListener('dragleave',()=>zone.classList.remove('dragover'));
+zone.addEventListener('drop',e=>{
+  e.preventDefault();zone.classList.remove('dragover');
+  const files=e.dataTransfer.files;
+  if(files.length>0) uploadFile(files[0]);
+});
+function uploadFile(file){
+  const fd=new FormData();fd.append('file',file);
+  fetch('/personal/upload',{method:'POST',body:fd}).then(()=>location.reload());
+}
+async function deleteFile(name){
+  if(!confirm(`'${name}'을(를) 휴지통으로 이동하시겠습니까?`)) return;
+  const res=await fetch(`/personal/delete/${name}`,{method:'DELETE'});
+  if(res.ok){alert("삭제되었습니다.");location.reload();}
+  else alert("삭제 실패!");
+}
+</script>
+{% endraw %}
+
+</body>
+</html>
+
+
+
