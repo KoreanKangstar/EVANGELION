@@ -11,3 +11,4 @@ instance/
 *.key
 *.crt
 *.bak
+routes/auth.py
