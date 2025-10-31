@@ -19,7 +19,7 @@ def user_dir():
 @personal_bp.route("/")
 def index():
     if "username" not in session:
-        session["username"] = "kyhoon0828"
+        session["username"] = "ID"
     return redirect(url_for("personal.user_home", username=session["username"]))
 
 @personal_bp.route("/<username>")
